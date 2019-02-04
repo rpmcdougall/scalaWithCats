@@ -1,7 +1,5 @@
 package rm.cats
 
-import rm.cats.RunPrintable.cat
-
 trait Printable[A] {
   def format(fmt: A) : String
 }
