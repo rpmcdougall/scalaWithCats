@@ -39,5 +39,5 @@ object RunPrintable extends App {
     }
   }
 
-  println(printableCat.format(cat))
+  Printable.print(cat)
 }
