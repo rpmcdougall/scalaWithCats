@@ -35,5 +35,4 @@ object RunFunction extends App{
   println(Tree.leaf(100).map(_ * 2))
   println(Tree.branch(Tree.leaf(10), Tree.leaf(20)).map(_ * 2))
 
-
 }
