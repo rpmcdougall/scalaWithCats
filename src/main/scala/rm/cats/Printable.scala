@@ -1,5 +1,7 @@
 package rm.cats
 
+import rm.cats.RunPrintable.cat
+
 trait Printable[A] {
   def format(fmt: A) : String
 }
@@ -24,6 +26,16 @@ object Printable {
   }
 }
 
+object PrintableSyntax {
+  implicit class PrintableOps[A](value: A) {
+    def format(implicit p: Printable[A]): String =
+      Printable.format(value)
+
+    def print(implicit p: Printable[A]): Unit =
+      Printable.print(value)
+  }
+}
+
 final case class Cat(name: String, age: Int, color: String)
 
 object RunPrintable extends App {
@@ -40,4 +52,22 @@ object RunPrintable extends App {
   }
 
   Printable.print(cat)
+}
+
+
+
+object RunPrintableWithSyntax extends App{
+  import PrintableInstances._
+  import PrintableSyntax._
+
+  implicit val printableCat = new Printable[Cat] {
+    def format(cat: Cat): String = {
+      val name = Printable.format(cat.name)
+      val age = Printable.format(cat.age)
+      val color = Printable.format(cat.color)
+      s"$name is a $age year-old $color cat."
+    }
+  }
+
+  Cat("Winston", 5, "Magnifico").print
 }
